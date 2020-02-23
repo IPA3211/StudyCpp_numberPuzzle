@@ -2,34 +2,30 @@
 #include <cstdio>
 #include <vector>
 #include <iostream>
-#include <algorithm>
+#include "header/header.h"
+
 using namespace std;
 
 
 int main() {
-    int input_array_size, input_queries;
 
-    cin >> input_array_size;
-    cin >> input_queries;
+    map game_map;
 
-    int **a = new int *[input_array_size];
+    int map_size_x, map_size_y;
+    
+    map_size_x = 5;
+    map_size_y = 5;
 
-    for(int i = 0; i < input_array_size; i++){
-        int k;
-        cin >> k;
-        a[i] = new int [k];
+    build_map(game_map, map_size_x, map_size_y);
 
-        for (int j = 0; j < k; j++)
-            cin >> a[i][j];
-    }
-
-    for (int i = 0; i < input_queries; i++){
-        int input_query_x, input_query_y;
-
-        cin >> input_query_x;
-        cin >> input_query_y;
-
-        cout << a[input_query_x][input_query_y] << endl;
+    for(int i = 0; i < map_size_x; i++){
+        for(int j = 0; j < map_size_y; j++){
+            if(MAX_INT == game_map[i][j])
+                cout << "*" << "\t";
+            else
+                cout << game_map[i][j] << "\t";
+        }
+        cout << "\n" << endl;
     }
 
 }
