@@ -3,6 +3,7 @@
 #include <vector>
 #include <iostream>
 #include "header/header.h"
+#include "header/vector2.h"
 
 using namespace std;
 
@@ -13,19 +14,19 @@ int main() {
 
     int map_size_x, map_size_y;
     
-    map_size_x = 5;
-    map_size_y = 5;
+    cin >> map_size_x;
+    cin >> map_size_y;
 
-    build_map(game_map, map_size_x, map_size_y);
+    Vector2 map_size(map_size_x, map_size_y); 
+    Vector2 player_pos(map_size_x - 1, map_size_y - 1);   
 
-    for(int i = 0; i < map_size_x; i++){
-        for(int j = 0; j < map_size_y; j++){
-            if(MAX_INT == game_map[i][j])
-                cout << "*" << "\t";
-            else
-                cout << game_map[i][j] << "\t";
-        }
-        cout << "\n" << endl;
-    }
+    build_map(game_map, map_size);
+
+    char input = 0;
+    
+    do{
+        show_map(game_map, map_size);
+        cin >> input;
+    }while(move_player(game_map, input, player_pos, map_size));
 
 }
