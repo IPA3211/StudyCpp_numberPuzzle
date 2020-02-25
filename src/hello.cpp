@@ -4,6 +4,8 @@
 #include <limits>
 #include "header/header.h"
 #include "header/vector2.h"
+#include <termios.h>
+#include <unistd.h>
 
 void build_map(map &m, Vector2 &size){
     int x, y;
@@ -54,7 +56,9 @@ void show_map(const map &m, Vector2 &size){
 
 }
 
-bool move_player(map &m, const char &input, Vector2 &player_pos, const Vector2 &limit_size){
+bool move_player(game_status &gs, const char &input){
+    Vector2 &player_pos = gs.player_position;
+    map &map = gs.game_map;
 
     switch (input)
     {
@@ -89,6 +93,40 @@ bool move_player(map &m, const char &input, Vector2 &player_pos, const Vector2 &
     case 27:
         return false;
         break;
+    default
+        return true;
+        break;
     }
+
+}
+
+void input_option(const bool &onoff){
+    
+    termios t;
+
+    if(onoff){
+        tcgetattr(STDIN_FILENO, &t);
+        t.c_lflag &= ~ICANON;
+        tcsetattr(STDIN_FILENO, TCSANOW, &t);
+    }
+    else{
+        tcgetattr(STDIN_FILENO, &t);
+        t.c_lflag |= ICANON;
+        tcsetattr(STDIN_FILENO, TCSANOW, &t);
+    }
+
+}
+
+void play_game(game_status &gs){
+
+    input_option(true);
+
+    char input;
+
+    do{
+        system("clear");
+        show_map(gs.game_map, gs.map_limit);
+        cin >> input;
+    }while(move_player(gs.game_map, input, gs.player_position, gs.map_limit));
 
 }
