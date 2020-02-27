@@ -4,7 +4,6 @@
 #include "header/gameUI.h"
 
 void new_game(){
-    map game_map;
     game_status gs;
     int map_size_x, map_size_y;
     
@@ -19,11 +18,14 @@ void new_game(){
     // gs.map_limit = map_limit;
     // gs.player_position = player_position;
     
-    gs.map_limit = *(new Vector2(map_size_x, map_size_y));
-    gs.player_position = *(new Vector2(map_size_x - 1, map_size_y - 1));
-
-    build_map(gs.game_map, gs.map_limit);
+    gs.game_map = new map(map_size_x, map_size_y);
+    gs.player_position.setVector2(map_size_x - 1, map_size_y - 1);
+    gs.game_map.build_map();
+    
     play_game(gs);
+
+    std::cout << "game end";
+    
 }
 
 void show_start_UI(){
@@ -80,12 +82,14 @@ void show_pause_UI(game_status gs){
             play_game(gs);
             break;
         case '2':
+            gs.~game_status();
             new_game();
             break;
         case '3':  
             /* save game */
             break;
         case '4':
+            gs.~game_status();
             show_start_UI();
             break;
         default:

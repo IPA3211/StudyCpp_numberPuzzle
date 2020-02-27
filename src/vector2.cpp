@@ -1,7 +1,9 @@
 #include "header/vector2.h"
+#include <iostream>
 
 
 Vector2::Vector2(int x = 0, int y = 0){
+    std::cout << "Hello Vector" << std::endl;
     this -> x = x;
     this -> y = y;
 }
@@ -34,6 +36,10 @@ Vector2 & Vector2::operator=(const Vector2 &other){
     return *this;
 }
 
+Vector2::~Vector2(){
+    std::cout << "bye Vector" << std::endl;
+
+}
 
 bool std::isOverSize(const int &pos_x, const int &pos_y, const int &limit_x, const int &limit_y){
     if(pos_x >= limit_x || pos_y >= limit_y)

@@ -18,7 +18,7 @@ class Vector2
         void setVector2Y(const int &y);
 
         Vector2& operator=(const Vector2 &other);
-
+        ~Vector2();
 };
 namespace std{
     bool isOverSize(const Vector2 &pos, const Vector2 &limit);

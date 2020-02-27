@@ -1,16 +1,16 @@
 #pragma once
 #include "vector2.h"
+#include "map.h"
 
 #define _DEBUG
 
-typedef int** map;
-
 struct game_status
 {
-    Vector2 map_limit;
     Vector2 player_position;
 
     map game_map;
+
+    ~game_status();
 };
 
 
