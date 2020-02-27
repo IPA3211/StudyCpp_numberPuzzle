@@ -1,6 +1,6 @@
 #pragma once
-#include "header/header.h"
-#include "header/vector2.h"
+#include "vector2.h"
+#include "gameSystem.h"
 
 void show_start_UI();
 void show_pause_UI(game_status gs);

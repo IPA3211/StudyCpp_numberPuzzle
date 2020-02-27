@@ -9,6 +9,9 @@ Vector2::Vector2(int x = 0, int y = 0){
 Vector2::Vector2(const Vector2 &v){
     Vector2(v.x, v.y);
 }
+Vector2::Vector2(){
+    Vector2(0, 0);
+}
 
 int Vector2::getVector2X() const { return x; }
 int Vector2::getVector2Y() const { return y; }
@@ -25,6 +28,11 @@ void Vector2::setVector2(const int &_x, const int &_y){
 void Vector2::setVector2X(const int &_x){ x = _x; }
 void Vector2::setVector2Y(const int &_y){ y = _y; }
 
+Vector2 & Vector2::operator=(const Vector2 &other){
+    this -> x = other.x;
+    this -> y = other.y;
+    return *this;
+}
 
 
 bool std::isOverSize(const int &pos_x, const int &pos_y, const int &limit_x, const int &limit_y){

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "header/header.h"
+#include "header/gameSystem.h"
 #include "header/vector2.h"
 #include "header/gameUI.h"
 
@@ -8,17 +8,27 @@ void new_game(){
     game_status gs;
     int map_size_x, map_size_y;
     
-    cin >> map_size_x;
-    cin >> map_size_y;
+    std::cout << "맵 사이즈를 선택해 주세요 : ";
 
-    gs.map_limit = new Vector2(map_size_x, map_size_y);
-    gs.player_position = new Vector2(map_size_x - 1, map_size_y - 1);
+    std::cin >> map_size_x;
+    std::cin >> map_size_y;
+
+    // Vector2 map_limit(map_size_x, map_size_y);
+    // Vector2 player_position(map_size_x - 1, map_size_y - 1);
+
+    // gs.map_limit = map_limit;
+    // gs.player_position = player_position;
     
-    build_map(gs.game_map, map_size);
+    gs.map_limit = *(new Vector2(map_size_x, map_size_y));
+    gs.player_position = *(new Vector2(map_size_x - 1, map_size_y - 1));
+
+    build_map(gs.game_map, gs.map_limit);
     play_game(gs);
 }
 
 void show_start_UI(){
+
+    input_option(false);
     
     using namespace std;
 
@@ -49,7 +59,9 @@ void show_start_UI(){
 
 }
 
-void show_pause_UI(){
+void show_pause_UI(game_status gs){
+
+    input_option(false);
 
     using namespace std;
 
@@ -59,10 +71,13 @@ void show_pause_UI(){
     cout << "3 : 저 장 " << endl;
     cout << "4 : 메인으로" << endl;
 
+    char input;
+    cin >> input;
+
     switch (input)
     {
         case '1':
-            play_game(game_map, map_size, player_pos);
+            play_game(gs);
             break;
         case '2':
             new_game();
@@ -71,6 +86,7 @@ void show_pause_UI(){
             /* save game */
             break;
         case '4':
+            show_start_UI();
             break;
         default:
             break;

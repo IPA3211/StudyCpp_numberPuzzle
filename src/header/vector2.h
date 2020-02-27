@@ -5,6 +5,7 @@ class Vector2
     private:
         int x, y;
     public:
+        Vector2();
         Vector2(int x, int y);
         Vector2(const Vector2 &p);
 
@@ -15,6 +16,8 @@ class Vector2
         void setVector2(const int &x, const int &y);
         void setVector2X(const int &x);
         void setVector2Y(const int &y);
+
+        Vector2& operator=(const Vector2 &other);
 
 };
 namespace std{

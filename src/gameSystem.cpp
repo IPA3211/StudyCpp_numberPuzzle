@@ -2,8 +2,9 @@
 #include <random>
 #include <algorithm>
 #include <limits>
-#include "header/header.h"
+#include "header/gameSystem.h"
 #include "header/vector2.h"
+#include "header/gameUI.h"
 #include <termios.h>
 #include <unistd.h>
 
@@ -11,13 +12,15 @@ void build_map(map &m, Vector2 &size){
     int x, y;
     size.getVector2ByR(x, y);
 
+    std::cout << x << " " << y;
+
     std::random_device rd;
     std::mt19937 mersenne(rd());
-    std::uniform_int_distribution<> random_num(0, x*y -1);
+    std::uniform_int_distribution<> random_num(0, x * y -1);
 
-    int *a = new int [x * y - 1];
+    int *a = new int [x * y];
 
-    for(int i = 0; i < x * y; i++){
+    for(int i = 0; i < x * y - 1 ; i++){
         a[i] = i + 1;
     }
 
@@ -37,6 +40,8 @@ void build_map(map &m, Vector2 &size){
                 m[x-1][y-1] = MAX_INT;
         }
     }
+
+    std::cout << "build map complete";
 }
 
 void show_map(const map &m, Vector2 &size){
@@ -58,42 +63,43 @@ void show_map(const map &m, Vector2 &size){
 
 bool move_player(game_status &gs, const char &input){
     Vector2 &player_pos = gs.player_position;
-    map &map = gs.game_map;
+    map &m = gs.game_map;
 
     switch (input)
     {
     case 'a':
-        if(std::isOverSize(player_pos.getVector2X(), player_pos.getVector2Y() - 1, limit_size)){
+        if(std::isOverSize(player_pos.getVector2X(), player_pos.getVector2Y() - 1, gs.map_limit)){
             std::swap(m[player_pos.getVector2X()][player_pos.getVector2Y()], m[player_pos.getVector2X()][player_pos.getVector2Y() - 1]);
             player_pos.setVector2Y(player_pos.getVector2Y() - 1);
         }
         return true;
         break;
     case 'w':
-        if(std::isOverSize(player_pos.getVector2X() - 1, player_pos.getVector2Y(), limit_size)){
+        if(std::isOverSize(player_pos.getVector2X() - 1, player_pos.getVector2Y(), gs.map_limit)){
             std::swap(m[player_pos.getVector2X()][player_pos.getVector2Y()], m[player_pos.getVector2X() - 1][player_pos.getVector2Y()]);
             player_pos.setVector2X(player_pos.getVector2X() - 1);
         }
         return true;
         break;
     case 'd':
-        if(std::isOverSize(player_pos.getVector2X(), player_pos.getVector2Y() + 1, limit_size)){
+        if(std::isOverSize(player_pos.getVector2X(), player_pos.getVector2Y() + 1, gs.map_limit)){
             std::swap(m[player_pos.getVector2X()][player_pos.getVector2Y()], m[player_pos.getVector2X()][player_pos.getVector2Y() + 1]);
             player_pos.setVector2Y(player_pos.getVector2Y() + 1);
         }
         return true;
         break;
     case 's':
-        if(std::isOverSize(player_pos.getVector2X() + 1, player_pos.getVector2Y(), limit_size)){
+        if(std::isOverSize(player_pos.getVector2X() + 1, player_pos.getVector2Y(), gs.map_limit)){
             std::swap(m[player_pos.getVector2X()][player_pos.getVector2Y()], m[player_pos.getVector2X() + 1][player_pos.getVector2Y()]);
             player_pos.setVector2X(player_pos.getVector2X() + 1);
         }
         return true;
         break;
     case 27:
+        show_pause_UI(gs);
         return false;
         break;
-    default
+    default:
         return true;
         break;
     }
@@ -126,7 +132,7 @@ void play_game(game_status &gs){
     do{
         system("clear");
         show_map(gs.game_map, gs.map_limit);
-        cin >> input;
-    }while(move_player(gs.game_map, input, gs.player_position, gs.map_limit));
+        std::cin >> input;
+    }while(move_player(gs, input));
 
 }
