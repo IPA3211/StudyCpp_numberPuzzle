@@ -10,7 +10,7 @@
 
 bool move_player(game_status &gs, const char &input){
     Vector2 &player_pos = gs.player_position;
-    map &m = gs.game_map.get_map();
+    md &m = gs.game_map.get_map();
 
     switch (input)
     {

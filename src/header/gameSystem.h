@@ -2,7 +2,7 @@
 #include "vector2.h"
 #include "map.h"
 
-#define _DEBUG
+#define _DEBUG true
 
 struct game_status
 {

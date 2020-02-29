@@ -10,6 +10,6 @@
 using namespace std;
 
 int main() {
-
-    show_start_UI();
+    while (true)
+        show_start_UI();
 }

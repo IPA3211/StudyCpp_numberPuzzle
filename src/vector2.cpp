@@ -3,7 +3,7 @@
 
 
 Vector2::Vector2(int x = 0, int y = 0){
-    std::cout << "Hello Vector" << std::endl;
+    //std::cout << "Hello Vector" << std::endl;
     this -> x = x;
     this -> y = y;
 }
@@ -37,11 +37,19 @@ Vector2 & Vector2::operator=(const Vector2 &other){
 }
 
 Vector2::~Vector2(){
-    std::cout << "bye Vector" << std::endl;
+    //std::cout << "bye Vector" << std::endl;
 
 }
 
 bool std::isOverSize(const int &pos_x, const int &pos_y, const int &limit_x, const int &limit_y){
+    
+    std::cout << "pos x:" << pos_x;
+    std::cout << "pos y:" << pos_y << endl;
+
+    std::cout << "lim x:" << limit_x;
+    std::cout << "lim x:" << limit_y << endl;
+
+    
     if(pos_x >= limit_x || pos_y >= limit_y)
         return false;
     else if(pos_x < 0 || pos_y < 0)

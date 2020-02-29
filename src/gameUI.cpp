@@ -3,8 +3,7 @@
 #include "header/vector2.h"
 #include "header/gameUI.h"
 
-void new_game(){
-    game_status gs;
+void new_game(game_status &gs){
     int map_size_x, map_size_y;
     
     std::cout << "맵 사이즈를 선택해 주세요 : ";
@@ -12,23 +11,14 @@ void new_game(){
     std::cin >> map_size_x;
     std::cin >> map_size_y;
 
-    // Vector2 map_limit(map_size_x, map_size_y);
-    // Vector2 player_position(map_size_x - 1, map_size_y - 1);
-
-    // gs.map_limit = map_limit;
-    // gs.player_position = player_position;
-    
-    gs.game_map = new map(map_size_x, map_size_y);
+    gs.game_map.resize_map(map_size_x, map_size_y);
     gs.player_position.setVector2(map_size_x - 1, map_size_y - 1);
     gs.game_map.build_map();
-    
-    play_game(gs);
-
-    std::cout << "game end";
-    
 }
 
 void show_start_UI(){
+
+    game_status gs;
 
     input_option(false);
     
@@ -46,13 +36,14 @@ void show_start_UI(){
     switch (input)
     {
         case '1':
-            new_game();
+            new_game(gs);
+            play_game(gs);
             break;
         case '2':
             /* Load game */
             break;
         case '3':  
-            return; // exit program
+            exit(0);// exit program
             break;
         
         default:
@@ -61,7 +52,7 @@ void show_start_UI(){
 
 }
 
-void show_pause_UI(game_status gs){
+void show_pause_UI(game_status &gs){
 
     input_option(false);
 
@@ -83,14 +74,12 @@ void show_pause_UI(game_status gs){
             break;
         case '2':
             gs.~game_status();
-            new_game();
+            new_game(gs);
+            play_game(gs);
             break;
-        case '3':  
-            /* save game */
+        case '3':
             break;
         case '4':
-            gs.~game_status();
-            show_start_UI();
             break;
         default:
             break;

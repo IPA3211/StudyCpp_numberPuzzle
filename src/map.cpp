@@ -11,6 +11,15 @@
 
 map::map(int x, int y)
 {
+    resize_map(x, y);
+}
+
+map::map()
+{
+    map(0,0);
+}
+
+void map::resize_map(int x, int y){
     data = new int *[x];
     for(int i = 0; i < x; i++){
         data[i] = new int [y];
@@ -42,7 +51,7 @@ void map::build_map(){
     for(int i = 0; i < x; i++){
         for(int j = 0; j < y; j++){
             data[i][j] = a[i * y + j];
-            if(i * j == (x -1) * (y -1))
+            if(i == (x -1) || j == (y -1))
                 data[x-1][y-1] = MAX_INT;
         }
     }
@@ -69,18 +78,18 @@ void map::show_map(){
 
 }
 
-int** map::get_map(){
+md& map::get_map(){
     return data;
 }
 
-Vector2 map::get_map_size(){
+Vector2& map::get_map_size(){
     return map_size;
 
 }
 
 map::~map()
 {
-    for(int i = 0; i < map_size.getVector2X(); i++){
+    for(int i = 0; i < map_size.getVector2X() - 1; i++){
         delete [] data[i];
     }
     delete [] data;
