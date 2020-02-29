@@ -20,6 +20,13 @@ map::map()
 }
 
 void map::resize_map(int x, int y){
+    if(data != nullptr){
+        for(int i = 0; i < map_size.getVector2X(); i++){
+            delete [] data[i];
+        }
+        delete [] data;
+    }
+
     data = new int *[x];
     for(int i = 0; i < x; i++){
         data[i] = new int [y];
@@ -89,7 +96,7 @@ Vector2& map::get_map_size(){
 
 map::~map()
 {
-    for(int i = 0; i < map_size.getVector2X() - 1; i++){
+    for(int i = 0; i < map_size.getVector2X(); i++){
         delete [] data[i];
     }
     delete [] data;

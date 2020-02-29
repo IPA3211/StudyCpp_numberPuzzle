@@ -7,7 +7,7 @@ class map
 {
 private:
     Vector2 map_size;
-    md data;
+    md data = nullptr;
 
 public:
     map();

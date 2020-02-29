@@ -73,7 +73,6 @@ void show_pause_UI(game_status &gs){
             play_game(gs);
             break;
         case '2':
-            gs.~game_status();
             new_game(gs);
             play_game(gs);
             break;
